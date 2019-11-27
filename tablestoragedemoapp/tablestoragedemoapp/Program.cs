@@ -16,9 +16,22 @@ namespace tablestoragedemoapp
             CloudTableClient tableClient = sa.CreateCloudTableClient();
             CloudTable table = tableClient.GetTableReference("employee");
 
+            EmployeeEntity objEmployee = new EmployeeEntity("Bhagavan", "Basvani");
 
+            TableOperation insertOp = TableOperation.Insert(objEmployee);
+
+            table.Execute(insertOp);
+
+            Console.ReadKey();
         }
     }
 
-
+    public class EmployeeEntity : TableEntity
+    {
+        public EmployeeEntity(string firstname, string lastName)
+        {
+            this.PartitionKey = "staff";
+            this.RowKey = firstname + " " + lastName;
+        }
+    }
 }
